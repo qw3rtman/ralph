@@ -3,6 +3,41 @@
 import json
 from pprint import pprint
 
+import os.path
+
+home = os.path.expanduser('~')
+dot_ralph = home + '/.ralph'
+
+# Ensure ~/.ralph exists.
+if not os.path.exists(dot_ralph):
+	print 'Creating ~/.ralph...'
+
+	os.makedirs(dot_ralph)
+
+# Ensure ~/.ralph/config.json exists.
+if not os.path.exists(home + '/.ralph/config.json'):
+	print 'Generating default configuration in ~/.ralph/config.json...'
+
+	configuration = open(home + '/.ralph/config.json', 'w+')
+	configuration.write('{\n\t"aliases": "~/.ralph/aliases",\n\t"blueprints": "~/.ralph/blueprints"\n}')
+	configuration.close()
+
+# Ensure ~/.ralph/aliases exists.
+if not os.path.exists(dot_ralph + '/aliases'):
+	print 'Creating ~/.ralph/aliases...'
+
+	os.makedirs(dot_ralph + '/aliases')
+
+# Ensure ~/.ralph/blueprints exists.
+if not os.path.exists(dot_ralph + '/blueprints'):
+	print 'Creating ~/.ralph/blueprints...'
+
+	os.makedirs(dot_ralph + '/blueprints')
+
+# Get configuration.
+with open(home + '/.ralph/config.json') as configuration_file:
+	configuration = json.load(configuration_file)
+
 with open('example.json') as data_file:
 	data = json.load(data_file)
 
