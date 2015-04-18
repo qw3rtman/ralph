@@ -178,6 +178,10 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 
 	alias.close()
 
+	# Make new alias executable.
+	new_alias = dot_ralph + '/aliases/' + blueprint[0];
+	os.chmod(new_alias, os.stat(new_alias).st_mode | 0111)
+
 	print colors.OKGREEN + u'- [✔] Successfully generated alias ' + colors.BOLD + blueprint[0] + colors.ENDC + colors.ENDC + colors.OKGREEN + ' from blueprint ' + colors.BOLD + blueprint[0] + '.json' + colors.ENDC + colors.ENDC + colors.OKGREEN + '.' + colors.ENDC
 
 print colors.OKGREEN + colors.BOLD + u'\n[✔] Done!' + colors.ENDC
