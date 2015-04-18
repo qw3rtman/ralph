@@ -18,5 +18,25 @@ sshdo() {
 	esac
 
 	echo $userSet $serverSet
+
+	if $user; then
+		user=${parameters[0]}
+	else
+		user="root"
+	fi
+
+	if $server; then
+		case ${parameters[1]} in
+			"website" ) server="123.456.78.910";;
+
+			"git" ) server="109.87.654.321";;
+
+			* ) echo "I've never heard of ${parameters[1]}.";;
+		esac
+	else
+		server="123.456.78.910"
+	fi
+
 }
+
 sshdo $@
