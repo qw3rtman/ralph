@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 # Terminal colors.
 class colors:
 	HEADER = '\033[95m'
@@ -16,6 +18,7 @@ import json
 from pprint import pprint
 
 import os.path
+import sys
 
 home = os.path.expanduser('~')
 dot_ralph = home + '/.ralph'
@@ -143,9 +146,11 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 
 				invalidValueError = data['arguments'][argument]['errors']['invalid']
 				for invalidValueErrorArgumentIndex, invalidValueErrorArgument in enumerate(data['arguments']):
-					invalidValueError = invalidValueError.replace('{' + invalidValueErrorArgument + '}', '${parameters[' + str(invalidValueErrorArgumentIndex) + ']}')
+					invalidValueError = invalidValueError.replace('{' + invalidValueErrorArgument + '}', colors.BOLD + '${parameters[' + str(invalidValueErrorArgumentIndex) + ']}' + colors.ENDC + colors.FAIL)
 
-				alias.write('\n\t\t\t* )' + ' echo "' + invalidValueError + '";;')
+				alias.write('\n\t\t\t* )' + ' echo "' + colors.FAIL)
+				alias.write(u'[✖] '.encode('utf8'))
+				alias.write(invalidValueError + '"\n\t\t\t\t\texit;\n\t\t\t\t\t;;')
 
 				alias.write('\n\t\tesac')
 
