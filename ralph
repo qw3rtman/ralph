@@ -41,11 +41,8 @@ with open(home + '/.ralph/config.json') as configuration_file:
 # Is the blueprint valid?
 def validate_blueprint(blueprint_json):
 	try:
-		# Valid JSON?
-		json.loads(blueprint_json)
-
 		# Actual JSON object?
-		blueprint = json.load(blueprint_json)
+		blueprint = json.loads(blueprint_json)
 	except ValueError as e:
 		print 'Invalid JSON.'
 
@@ -68,17 +65,22 @@ def validate_blueprint(blueprint_json):
 				print 'Number of arguments described does not match number of arguments in blueprint.'
 
 				return False
+
 		except IndexError as e:
 			print 'No arguments described.'
 
 			return False
 
+	return True
+
 for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 	with open(dot_ralph + '/blueprints/' + blueprint) as data_file:
-		try:
-			json.loads(data_file.read())
+		contents = data_file.read()
 
-			if not validate_blueprint(data_file.read()):
+		try:
+			json.loads(contents)
+
+			if not validate_blueprint(contents):
 				# Valid JSON, but not a valid blueprint.
 				print 'Invalid blueprint in ' + blueprint + '.'
 				continue
@@ -86,7 +88,7 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 			print 'Invalid JSON in ' + blueprint + '.'
 			continue # Move on to next blueprint...
 
-		data = json.load(data_file)
+		data = json.loads(contents)
 
 	blueprint = data["blueprint"].split()
 
@@ -165,3 +167,5 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 	alias.write('\n')
 
 	alias.close()
+
+	print '\n'
