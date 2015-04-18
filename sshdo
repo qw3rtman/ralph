@@ -19,13 +19,13 @@ sshdo() {
 
 	echo $userSet $serverSet
 
-	if $user; then
+	if $userSet; then
 		user=${parameters[0]}
 	else
 		user="root"
 	fi
 
-	if $server; then
+	if $serverSet; then
 		case ${parameters[1]} in
 			"website" ) server="123.456.78.910";;
 
@@ -37,6 +37,7 @@ sshdo() {
 		server="123.456.78.910"
 	fi
 
+	ssh $user@$server
 }
 
-sshdo $@
+sshdo "$@"

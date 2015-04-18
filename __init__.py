@@ -39,7 +39,7 @@ for argument in data['arguments']:
 alias.write('\n')
 
 for index, argument in enumerate(data['arguments']):
-	alias.write('\n\tif $' + argument + '; then\n\t\t')
+	alias.write('\n\tif $' + argument + 'Set; then\n\t\t')
 	if data['blueprint'][data['blueprint'].index(argument) - 1] == '*':
 		alias.write(argument + '=${parameters[' + str(index) + ']}')
 	else:
@@ -64,15 +64,19 @@ for index, argument in enumerate(data['arguments']):
 	alias.write('\n')
 
 # Generate command from blueprint and data.
-command = data['blueprint']
+command = data['command']
+command = command.replace('{', '$').replace('}', '')
 
 # Call the blueprint's command.
-# alias.write('\n' + str(command))
+alias.write('\n\t' + command)
 
 # Close the function declration.
 alias.write('\n}')
 
 # Call the function...
-alias.write('\n\n' + blueprint[0] + ' $@')
+alias.write('\n\n' + blueprint[0] + ' "$@"')
+
+# Trailing new line.
+alias.write('\n')
 
 alias.close()
