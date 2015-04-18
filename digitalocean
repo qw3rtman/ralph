@@ -37,7 +37,7 @@ digitalocean() {
 		server="123.456.78.910"
 	fi
 
-	echo "ssh ${user}@${server}"
+	ssh ${user}@${server}
 }
 
 digitalocean "$@"
