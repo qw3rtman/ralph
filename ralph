@@ -38,83 +38,130 @@ if not os.path.exists(dot_ralph + '/blueprints'):
 with open(home + '/.ralph/config.json') as configuration_file:
 	configuration = json.load(configuration_file)
 
-with open('example.json') as data_file:
-	data = json.load(data_file)
+# Is the blueprint valid?
+def validate_blueprint(blueprint_json):
+	try:
+		# Valid JSON?
+		json.loads(blueprint_json)
 
-blueprint = data["blueprint"].split()
+		# Actual JSON object?
+		blueprint = json.load(blueprint_json)
+	except ValueError as e:
+		print 'Invalid JSON.'
 
-alias = open(blueprint[0], 'w')
+		return False
 
-# Function declration.
-alias.write('#!/usr/bin/env bash\n\n' + blueprint[0] + '() {')
+	# Valid barebones blueprint?
+	try:
+		blueprint['blueprint']
+		blueprint['command']
+	except IndexError as e:
+		print 'Invalid blueprint.'
 
-if 'arguments' in data:
-	# Obtaining alias arguments.
-	alias.write('\n\tparameters=(${@:1:$(($#-($#-' + str(len(data['arguments'])) + ')))})')
+		return False
 
-	alias.write('\n\n\tcase ${#parameters[@]} in')
+	# Number of arguments in blueprint equals number of arguments specified?
+	number_of_arguments = blueprint['blueprint'].count('{')
+	if number_of_arguments > 0:
+		try:
+			if len(blueprint['arguments']) != number_of_arguments:
+				print 'Number of arguments described does not match number of arguments in blueprint.'
 
-	for number_of_arguments in range(0, len(data['arguments']) + 1):
-		alias.write('\n\t\t' + str(number_of_arguments) + ' ) ')
+				return False
+		except IndexError as e:
+			print 'No arguments described.'
 
-		for index, argument in enumerate(data['arguments']):
-			alias.write(argument + 'Set=')
+			return False
 
-			if index < number_of_arguments:
-				alias.write('true')
-			else:
-				alias.write('false')
+for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
+	with open(dot_ralph + '/blueprints/' + blueprint) as data_file:
+		try:
+			json.loads(data_file.read())
 
-			alias.write('\n\t\t\t\t')
+			if not validate_blueprint(data_file.read()):
+				# Valid JSON, but not a valid blueprint.
+				print 'Invalid blueprint in ' + blueprint + '.'
+				continue
+		except ValueError as e:
+			print 'Invalid JSON in ' + blueprint + '.'
+			continue # Move on to next blueprint...
 
-		alias.write(';;\n');
+		data = json.load(data_file)
 
-	alias.write('\tesac')
+	blueprint = data["blueprint"].split()
 
-	alias.write('\n\n\techo');
-	for argument in data['arguments']:
-		alias.write(' $' + argument + 'Set')
-	alias.write('\n')
+	alias = open(dot_ralph + '/aliases/' + blueprint[0], 'w')
 
-	for index, argument in enumerate(data['arguments']):
-		alias.write('\n\tif $' + argument + 'Set; then\n\t\t')
-		if data['blueprint'][data['blueprint'].index(argument) - 1] == '*':
-			alias.write(argument + '=${parameters[' + str(index) + ']}')
-		else:
-			alias.write('case ${parameters[' + str(index) + ']} in')
+	# Function declration.
+	alias.write('#!/usr/bin/env bash\n\n' + blueprint[0] + '() {')
 
-			for value in data['arguments'][argument]['values']:
-				if value != 'default':
-					alias.write('\n\t\t\t"' + value + '" ) ' + argument + '="' + data['arguments'][argument]['values'][value] + '";;\n')
+	if 'arguments' in data:
+		# Obtaining alias arguments.
+		alias.write('\n\tparameters=(${@:1:$(($#-($#-' + str(len(data['arguments'])) + ')))})')
 
-			invalidValueError = data['arguments'][argument]['errors']['invalid']
-			for invalidValueErrorArgumentIndex, invalidValueErrorArgument in enumerate(data['arguments']):
-				invalidValueError = invalidValueError.replace('{' + invalidValueErrorArgument + '}', '${parameters[' + str(invalidValueErrorArgumentIndex) + ']}')
+		alias.write('\n\n\tcase ${#parameters[@]} in')
 
-			alias.write('\n\t\t\t* )' + ' echo "' + invalidValueError + '";;')
+		for number_of_arguments in range(0, len(data['arguments']) + 1):
+			alias.write('\n\t\t' + str(number_of_arguments) + ' ) ')
 
-			alias.write('\n\t\tesac')
+			for index, argument in enumerate(data['arguments']):
+				alias.write(argument + 'Set=')
 
-		alias.write('\n\telse')
-		alias.write('\n\t\t' + argument + '="' + data['arguments'][argument]['values']['default'] + '"')
-		alias.write('\n\tfi')
+				if index < number_of_arguments:
+					alias.write('true')
+				else:
+					alias.write('false')
 
+				alias.write('\n\t\t\t\t')
+
+			alias.write(';;\n');
+
+		alias.write('\tesac')
+
+		alias.write('\n\n\techo');
+		for argument in data['arguments']:
+			alias.write(' $' + argument + 'Set')
 		alias.write('\n')
 
-# Generate command from blueprint and data.
-command = data['command']
-command = command.replace('{', '$').replace('}', '')
+		for index, argument in enumerate(data['arguments']):
+			alias.write('\n\tif $' + argument + 'Set; then\n\t\t')
+			if data['blueprint'][data['blueprint'].index(argument) - 1] == '*':
+				alias.write(argument + '=${parameters[' + str(index) + ']}')
+			else:
+				alias.write('case ${parameters[' + str(index) + ']} in')
 
-# Call the blueprint's command.
-alias.write('\n\t' + command)
+				for value in data['arguments'][argument]['values']:
+					if value != 'default':
+						alias.write('\n\t\t\t"' + value + '" ) ' + argument + '="' + data['arguments'][argument]['values'][value] + '";;\n')
 
-# Close the function declration.
-alias.write('\n}')
+				invalidValueError = data['arguments'][argument]['errors']['invalid']
+				for invalidValueErrorArgumentIndex, invalidValueErrorArgument in enumerate(data['arguments']):
+					invalidValueError = invalidValueError.replace('{' + invalidValueErrorArgument + '}', '${parameters[' + str(invalidValueErrorArgumentIndex) + ']}')
 
-# Call the function...
-alias.write('\n\n' + blueprint[0] + ' "$@"')
+				alias.write('\n\t\t\t* )' + ' echo "' + invalidValueError + '";;')
 
-# Trailing new line.
-alias.write('\n')
+				alias.write('\n\t\tesac')
 
-alias.close()
+			alias.write('\n\telse')
+			alias.write('\n\t\t' + argument + '="' + data['arguments'][argument]['values']['default'] + '"')
+			alias.write('\n\tfi')
+
+			alias.write('\n')
+
+	# Generate command from blueprint and data.
+	command = data['command']
+	command = command.replace('{', '$').replace('}', '')
+
+	# Call the blueprint's command.
+	alias.write('\n\t' + command)
+
+	# Close the function declration.
+	alias.write('\n}')
+
+	# Call the function...
+	alias.write('\n\n' + blueprint[0] + ' "$@"')
+
+	# Trailing new line.
+	alias.write('\n')
+
+	alias.close()
