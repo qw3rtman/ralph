@@ -130,11 +130,6 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 
 		alias.write('\tesac')
 
-		alias.write('\n\n\techo');
-		for argument in data['arguments']:
-			alias.write(' $' + argument + 'Set')
-		alias.write('\n')
-
 		for index, argument in enumerate(data['arguments']):
 			alias.write('\n\tif $' + argument + 'Set; then\n\t\t')
 			if data['blueprint'][data['blueprint'].index(argument) - 1] == '*':
