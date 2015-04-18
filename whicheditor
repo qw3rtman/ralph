@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-whicheditor() {
-	echo $EDITOR
-}
-
-whicheditor "$@"

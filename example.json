@@ -1,4 +1,4 @@
 {
-	"blueprint": "whicheditor",
-	"command": "echo $EDITOR"
+	"blueprint": "whatsmypath",
+	"command": "echo $PATH"
 }
