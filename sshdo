@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+sshdo() {
+	parameters=(${@:1:$(($#-($#-2)))})
+
+	case ${#parameters[@]} in
+		0 ) userSet=false
+				serverSet=false
+				;;
+
+		1 ) userSet=true
+				serverSet=false
+				;;
+
+		2 ) userSet=true
+				serverSet=true
+				;;
+	esac
+
+	echo $userSet $serverSet
+}
+sshdo $@

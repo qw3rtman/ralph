@@ -1,23 +1,22 @@
 {
-	"digitalocean {*user?} {~server?}": {
-		"command": "ssh {user}@{server}",
+	"blueprint": "sshdo {*user?} {~server?}",
+	"command": "ssh {user}@{server}",
 
-		"arguments": {
-			"user": {
-				"values": {
-					"default": "root"
-				}
+	"arguments": {
+		"user": {
+			"values": {
+				"default": "root"
+			}
+		},
+		"server": {
+			"values": {
+				"default": "123.456.78.910",
+
+				"website": "123.456.78.910",
+				"git": "109.87.654.321"
 			},
-			"server": {
-				"values": {
-					"default": "123.456.78.910",
-
-					"website": "123.456.78.910",
-					"git": "109.87.654.321"
-				},
-				"errors": {
-					"invalid": "I've never heard of {server}."
-				}
+			"errors": {
+				"invalid": "I've never heard of {server}."
 			}
 		}
 	}
