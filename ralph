@@ -20,6 +20,11 @@ import sys
 home = os.path.expanduser('~')
 dot_ralph = home + '/.ralph'
 
+# Get configuration.
+if os.path.exists(home + '/.ralph/config.json'):
+	with open(home + '/.ralph/config.json') as configuration_file:
+		configuration = json.load(configuration_file)
+
 # Ensure ~/.ralph exists.
 if not os.path.exists(dot_ralph):
 	print 'Creating ~/.ralph...'
@@ -35,20 +40,23 @@ if not os.path.exists(home + '/.ralph/config.json'):
 	configuration.close()
 
 # Ensure ~/.ralph/aliases exists.
-if not os.path.exists(dot_ralph + '/aliases'):
-	print 'Creating ~/.ralph/aliases...'
+if not os.path.exists(configuration['aliases'].replace('~', home)):
+	print 'Creating ' + configuration['aliases'] + '...'
 
-	os.makedirs(dot_ralph + '/aliases')
+	os.makedirs(configuration['aliases'].replace('~', home))
 
 # Ensure ~/.ralph/blueprints exists.
-if not os.path.exists(dot_ralph + '/blueprints'):
-	print 'Creating ~/.ralph/blueprints...'
+if not os.path.exists(configuration['blueprints'].replace('~', home)):
+	print 'Creating ' + configuration['blueprints'] + '...'
 
-	os.makedirs(dot_ralph + '/blueprints')
+	os.makedirs(configuration['blueprints'].replace('~', home))
 
-# Get configuration.
-with open(home + '/.ralph/config.json') as configuration_file:
-	configuration = json.load(configuration_file)
+# Add ~/.ralph/aliases to $PATH...
+with open(home + '/.bashrc', 'a') as bashrc:
+	bashrc.write('\nPATH=' + configuration['aliases'] + ':$PATH')
+
+with open(home + '/.zshrc', 'a') as zshrc:
+	zshrc.write('\nexport PATH="' + configuration['aliases'].replace('~', home) + '":$PATH')
 
 # Is the blueprint valid?
 def validate_blueprint(blueprint_json):
@@ -84,8 +92,10 @@ def validate_blueprint(blueprint_json):
 	except NameError as e:
 		return True
 
+someOperationsExecuted = False
+
 for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
-	with open(dot_ralph + '/blueprints/' + blueprint) as data_file:
+	with open(configuration['blueprints'].replace('~', home) + blueprint) as data_file:
 		contents = data_file.read()
 
 		try:
@@ -102,7 +112,7 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 
 	blueprint = data["blueprint"].split()
 
-	alias = open(dot_ralph + '/aliases/' + blueprint[0], 'w')
+	alias = open(configuration['aliases'].replace('~', home) + blueprint[0], 'w')
 
 	# Function declration.
 	alias.write('#!/usr/bin/env bash\n\n' + blueprint[0] + '() {')
@@ -196,9 +206,14 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 	alias.close()
 
 	# Make new alias executable.
-	new_alias = dot_ralph + '/aliases/' + blueprint[0];
+	new_alias = configuration['aliases'].replace('~', home) + blueprint[0];
 	os.chmod(new_alias, os.stat(new_alias).st_mode | 0111)
 
 	print colors.OKGREEN + u'- [✔] Successfully generated alias ' + colors.BOLD + blueprint[0] + colors.ENDC + colors.ENDC + colors.OKGREEN + ' from blueprint ' + colors.BOLD + blueprint[0] + '.json' + colors.ENDC + colors.ENDC + colors.OKGREEN + '.' + colors.ENDC
 
-print colors.OKGREEN + colors.BOLD + u'\n[✔] Done!' + colors.ENDC
+	someOperationsExecuted = True
+
+if someOperationsExecuted:
+	print '\n'
+
+print colors.OKGREEN + colors.BOLD + u'[✔] Done!' + colors.ENDC
