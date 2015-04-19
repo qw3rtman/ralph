@@ -246,4 +246,6 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 if someOperationsExecuted:
 	print
 
-print colors.OKGREEN + colors.BOLD + u'[✔] Done!' + colors.ENDC
+	print colors.OKGREEN + colors.BOLD + u'[✔] Done!' + colors.ENDC
+else:
+	print colors.OKGREEN + u'[✔] Nothing to do. Design some blueprints in ' + colors.BOLD + configuration['blueprints'] + colors.ENDC + colors.OKGREEN + ' and run ' + colors.BOLD + 'ralph' + colors.ENDC + colors.OKGREEN + ' again to experience the magic.' + colors.ENDC
