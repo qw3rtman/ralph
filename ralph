@@ -20,11 +20,15 @@ import sys
 home = os.path.expanduser('~')
 dot_ralph = home + '/.ralph'
 
+someOperationsExecuted = False
+
 # Ensure ~/.ralph exists.
 if not os.path.exists(dot_ralph):
 	print 'Creating ~/.ralph...'
 
 	os.makedirs(dot_ralph)
+
+	someOperationsExecuted = True
 
 # Ensure ~/.ralph/config.json exists.
 if not os.path.exists(home + '/.ralph/config.json'):
@@ -33,6 +37,8 @@ if not os.path.exists(home + '/.ralph/config.json'):
 	configuration = open(home + '/.ralph/config.json', 'w+')
 	configuration.write('{\n\t"aliases": "~/.ralph/aliases/",\n\t"blueprints": "~/.ralph/blueprints/"\n}')
 	configuration.close()
+
+	someOperationsExecuted = True
 
 # Get configuration.
 if os.path.exists(home + '/.ralph/config.json'):
@@ -45,11 +51,15 @@ if not os.path.exists(configuration['aliases'].replace('~', home)):
 
 	os.makedirs(configuration['aliases'].replace('~', home))
 
+	someOperationsExecuted = True
+
 # Ensure ~/.ralph/blueprints exists.
 if not os.path.exists(configuration['blueprints'].replace('~', home)):
 	print 'Creating ' + configuration['blueprints'] + '...'
 
 	os.makedirs(configuration['blueprints'].replace('~', home))
+
+	someOperationsExecuted = True
 
 # Add ~/.ralph/aliases to $PATH...
 with open(home + '/.bashrc', 'a') as bashrc:
@@ -91,8 +101,6 @@ def validate_blueprint(blueprint_json):
 		return False
 	except NameError as e:
 		return True
-
-someOperationsExecuted = False
 
 for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 	with open(configuration['blueprints'].replace('~', home) + blueprint) as data_file:
@@ -214,6 +222,6 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 	someOperationsExecuted = True
 
 if someOperationsExecuted:
-	print '\n'
+	print
 
 print colors.OKGREEN + colors.BOLD + u'[✔] Done!' + colors.ENDC
