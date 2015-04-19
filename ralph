@@ -20,11 +20,6 @@ import sys
 home = os.path.expanduser('~')
 dot_ralph = home + '/.ralph'
 
-# Get configuration.
-if os.path.exists(home + '/.ralph/config.json'):
-	with open(home + '/.ralph/config.json') as configuration_file:
-		configuration = json.load(configuration_file)
-
 # Ensure ~/.ralph exists.
 if not os.path.exists(dot_ralph):
 	print 'Creating ~/.ralph...'
@@ -38,6 +33,11 @@ if not os.path.exists(home + '/.ralph/config.json'):
 	configuration = open(home + '/.ralph/config.json', 'w+')
 	configuration.write('{\n\t"aliases": "~/.ralph/aliases/",\n\t"blueprints": "~/.ralph/blueprints/"\n}')
 	configuration.close()
+
+# Get configuration.
+if os.path.exists(home + '/.ralph/config.json'):
+	with open(home + '/.ralph/config.json') as configuration_file:
+		configuration = json.load(configuration_file)
 
 # Ensure ~/.ralph/aliases exists.
 if not os.path.exists(configuration['aliases'].replace('~', home)):
