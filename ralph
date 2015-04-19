@@ -36,7 +36,7 @@ if not os.path.exists(home + '/.ralph/config.json'):
 	print 'Generating default configuration in ~/.ralph/config.json...'
 
 	configuration = open(home + '/.ralph/config.json', 'w+')
-	configuration.write('{\n\t"aliases": "~/.ralph/aliases",\n\t"blueprints": "~/.ralph/blueprints"\n}')
+	configuration.write('{\n\t"aliases": "~/.ralph/aliases/",\n\t"blueprints": "~/.ralph/blueprints/"\n}')
 	configuration.close()
 
 # Ensure ~/.ralph/aliases exists.
