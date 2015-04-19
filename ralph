@@ -24,7 +24,7 @@ someOperationsExecuted = False
 
 # Ensure ~/.ralph exists.
 if not os.path.exists(dot_ralph):
-	print 'Creating ~/.ralph...'
+	print colors.OKGREEN + u'[✔] Creating ' + colors.BOLD + '~/.ralph' + colors.ENDC + colors.OKGREEN + '...' + colors.ENDC
 
 	os.makedirs(dot_ralph)
 
@@ -32,7 +32,7 @@ if not os.path.exists(dot_ralph):
 
 # Ensure ~/.ralph/config.json exists.
 if not os.path.exists(home + '/.ralph/config.json'):
-	print 'Generating default configuration in ~/.ralph/config.json...'
+	print colors.OKGREEN + u'[✔] Generating default configuration in ' + colors.BOLD + '~/.ralph/config.json' + colors.ENDC + colors.OKGREEN + '...' + colors.ENDC
 
 	configuration = open(home + '/.ralph/config.json', 'w+')
 	configuration.write('{\n\t"aliases": "~/.ralph/aliases/",\n\t"blueprints": "~/.ralph/blueprints/"\n}')
@@ -47,7 +47,7 @@ if os.path.exists(home + '/.ralph/config.json'):
 
 # Ensure ~/.ralph/aliases exists.
 if not os.path.exists(configuration['aliases'].replace('~', home)):
-	print 'Creating ' + configuration['aliases'] + '...'
+	print colors.OKGREEN + u'[✔] Creating ' + colors.BOLD + configuration['aliases'] + colors.ENDC + colors.OKGREEN + '...' + colors.ENDC
 
 	os.makedirs(configuration['aliases'].replace('~', home))
 
@@ -55,7 +55,7 @@ if not os.path.exists(configuration['aliases'].replace('~', home)):
 
 # Ensure ~/.ralph/blueprints exists.
 if not os.path.exists(configuration['blueprints'].replace('~', home)):
-	print 'Creating ' + configuration['blueprints'] + '...'
+	print colors.OKGREEN + u'[✔] Creating ' + colors.BOLD + configuration['blueprints'] + colors.ENDC + colors.OKGREEN + '...' + colors.ENDC
 
 	os.makedirs(configuration['blueprints'].replace('~', home))
 
@@ -67,6 +67,14 @@ with open(home + '/.bashrc', 'a') as bashrc:
 
 with open(home + '/.zshrc', 'a') as zshrc:
 	zshrc.write('\nexport PATH="' + configuration['aliases'].replace('~', home) + '":$PATH')
+
+# If any operations executed by now, add a new line to separate configuration
+# generation, etc. from the actual alias creation.
+if someOperationsExecuted:
+	print
+
+	# Reset someOperationsExecuted to prevent a double line break.
+	someOperationsExecuted = False
 
 # Is the blueprint valid?
 def validate_blueprint(blueprint_json):
