@@ -62,11 +62,25 @@ if not os.path.exists(configuration['blueprints'].replace('~', home)):
 	someOperationsExecuted = True
 
 # Add ~/.ralph/aliases to $PATH...
-with open(home + '/.bashrc', 'a') as bashrc:
-	bashrc.write('\nPATH=' + configuration['aliases'] + ':$PATH')
+with open(home + '/.bashrc', 'r+') as bashrc:
+	bashrc_path = '\nPATH=' + configuration['aliases'] + ':$PATH'
 
-with open(home + '/.zshrc', 'a') as zshrc:
-	zshrc.write('\nexport PATH="' + configuration['aliases'].replace('~', home) + '":$PATH')
+	if bashrc_path not in bashrc.read():
+		bashrc.write(bashrc_path)
+
+		print colors.OKGREEN + u'[✔] Adding aliases to ' + colors.BOLD + 'Bash $PATH' + colors.ENDC + colors.OKGREEN + '.' + colors.ENDC
+
+		someOperationsExecuted = True
+
+with open(home + '/.zshrc', 'r+') as zshrc:
+	zshrc_path = '\nexport PATH="' + configuration['aliases'].replace('~', home) + '":$PATH'
+
+	if zshrc_path not in zshrc.read():
+		zshrc.write(zshrc_path)
+
+		print colors.OKGREEN + u'[✔] Adding aliases to ' + colors.BOLD + 'Zsh $PATH' + colors.ENDC + colors.OKGREEN + '.' + colors.ENDC
+
+		someOperationsExecuted = True
 
 # If any operations executed by now, add a new line to separate configuration
 # generation, etc. from the actual alias creation.
