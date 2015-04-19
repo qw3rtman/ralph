@@ -131,20 +131,24 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 
 			alias.write(';;\n');
 
-		alias.write('\tesac')
+		alias.write('\tesac\n')
 
 		for index, argument in enumerate(data['arguments']):
 			alias.write('\n\tif $' + argument + 'Set; then\n\t\t')
-			if data['blueprint'][data['blueprint'].index(argument) - 1] == '*':
+			if data['blueprint'][data['blueprint'].index(argument) - 1] == '*': # Any value.
 				alias.write(argument + '=${parameters[' + str(index) + ']}')
-			else:
+			else: # Certain values.
 				alias.write('case ${parameters[' + str(index) + ']} in')
 
 				for value in data['arguments'][argument]['values']:
 					if value != 'default':
 						alias.write('\n\t\t\t"' + value + '" ) ' + argument + '="' + data['arguments'][argument]['values'][value] + '";;\n')
 
-				invalidValueError = data['arguments'][argument]['errors']['invalid']
+				invalidValueError = colors.FAIL + 'Invalid value for ' + colors.BOLD + argument + colors.ENDC + colors.FAIL + '.'
+				if data['arguments'][argument].has_key('errors'):
+					if data['arguments'][argument]['errors'].has_key('invalid'):
+						invalidValueError = data['arguments'][argument]['errors']['invalid']
+
 				for invalidValueErrorArgumentIndex, invalidValueErrorArgument in enumerate(data['arguments']):
 					invalidValueError = invalidValueError.replace('{' + invalidValueErrorArgument + '}', colors.BOLD + '${parameters[' + str(invalidValueErrorArgumentIndex) + ']}' + colors.ENDC + colors.FAIL)
 

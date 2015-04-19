@@ -17,8 +17,6 @@ sshdo() {
 				;;
 	esac
 
-	echo $userSet $serverSet
-
 	if $userSet; then
 		user=${parameters[0]}
 	else
