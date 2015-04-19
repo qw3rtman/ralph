@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 # Terminal colors.
 class colors:
 	HEADER = '\033[95m'
@@ -15,7 +13,6 @@ class colors:
 	UNDERLINE = '\033[4m'
 
 import json
-from pprint import pprint
 
 import os.path
 import sys
