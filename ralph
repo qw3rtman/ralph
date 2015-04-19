@@ -161,19 +161,21 @@ for blueprint in os.listdir(configuration['blueprints'].replace('~', home)):
 			if data['blueprint'][data['blueprint'].index(argument) + len(argument)] == '?':
 				alias.write('\n\telse')
 				alias.write('\n\t\t' + argument + '="' + data['arguments'][argument]['values']['default'] + '"')
-				alias.write('\n\texit')
 				alias.write('\n\tfi')
 
 				alias.write('\n')
 			else:
-				missingValueError = colors.FAIL + colors.BOLD + argument + colors.ENDC + colors.FAIL + ' is a required argument.' + colors.ENDC
+				missingValueError = colors.FAIL + colors.BOLD + argument + colors.ENDC + colors.FAIL + u' is a required argument.' + colors.ENDC
 				if data['arguments'][argument].has_key('errors'):
 					if data['arguments'][argument]['errors'].has_key('missing'):
 						missingValueError = data['arguments'][argument]['errors']['missing']
 
 				alias.write('\n\telse')
-				alias.write('\n\t\techo "' + missingValueError + '"')
-				alias.write('\n\texit')
+				alias.write('\n\t\t')
+				alias.write('echo "' + colors.FAIL)
+				alias.write(u'[✖] '.encode('utf8'))
+				alias.write(missingValueError + '"')
+				alias.write('\n\t\texit')
 				alias.write('\n\tfi')
 
 				alias.write('\n')
