@@ -118,6 +118,8 @@ def validate_blueprint(blueprint_json):
 	try:
 		error
 
+		someOperationsExecuted = True
+
 		print colors.FAIL + colors.BOLD + u' - [✖] Invalid blueprint in ' + colors.UNDERLINE + blueprint['blueprint'].split()[0] + colors.ENDC + colors.FAIL + colors.BOLD + '.' + colors.ENDC
 		print colors.FAIL + '  - ' + error + colors.ENDC
 		return False
