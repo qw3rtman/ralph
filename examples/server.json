@@ -1,0 +1,23 @@
+{
+	"blueprint": "server {*user?} {~server?}",
+	"command": "ssh {user}@{server}",
+
+	"arguments": {
+		"user": {
+			"values": {
+				"default": "root"
+			}
+		},
+		"server": {
+			"values": {
+				"default": "123.456.78.910",
+
+				"website": "123.456.78.910",
+				"git": "91.876.54.321"
+			},
+			"errors": {
+				"invalid": "I've never heard of {server}."
+			}
+		}
+	}
+}
