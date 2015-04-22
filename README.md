@@ -6,7 +6,7 @@
                                     .-.   //  .-.
                                    /   \-((=-/   \    /~~~~~~~~~~~~~~~~~~~~~~~~~~~+
                                    \      \\     /   / Hey there! I'm Ralph, your |
-                                    `( ____))_ )`   <  personal alias apprentice. |
+ $ ralph # Magic...                 `( ____))_ )`   <  personal alias apprentice. |
                                     .-'   //  '-.    \ How can I serve you today? |
                                    /     ((      \    \~~~~~~~~~~~~~~~~~~~~~~~~~~~+
                                   |       !       |
