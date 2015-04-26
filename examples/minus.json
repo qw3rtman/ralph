@@ -1,0 +1,17 @@
+{
+	"blueprint": "minus {*one} {*two}",
+	"command": "expr {one} - {two}",
+
+	"arguments": {
+		"one": {
+			"errors": {
+				"missing": "Where's the minuend?"
+			}
+		},
+		"two": {
+			"errors": {
+				"missing": "Where's the subtrahend?"
+			}
+		}
+	}
+}
