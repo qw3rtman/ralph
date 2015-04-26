@@ -127,11 +127,13 @@ Installation is super-simple: no finicky package managers or dependencies; just 
 After downloading `ralph`, simply copy it over to your `$PATH` and you're good to go.
 ```sh
 $ wget https://github.com/qw3rtman/ralph/releases/download/v0.1.0/ralph
-$ chmod +x j
-$ mv j /usr/local/bin
+$ chmod +x ralph
+$ mv ralph /usr/local/bin
 ```
 
 If you don't have `wget` on your system, you can download `ralph` from the [releases page](https://github.com/qw3rtman/ralph/releases) and follow the above steps from the second one onward.
+
+**Now just run `ralph` once and Ralph will take care of setting up your `~/.ralph` directory with all the default settings.**
 
 ## Limitations
 The major limitation with `ralph` is inherent in optional parameters.
