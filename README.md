@@ -124,7 +124,7 @@ Just call them! For example, with the above example: `$ digitalocean`.
 In addition, you can call them with `sudo`, **unlike classic Bash aliases**: `$ sudo digitalocean`.
 
 ## Installation
-Installation is super-simple: no finicky package managers or dependencies; just pure drag-and-drop.
+Installation is super-simple: no finicky package managers or dependencies (**other than Python**); just pure drag-and-drop.
 
 After downloading `ralph`, simply copy it over to your `$PATH` and you're good to go.
 ```sh
