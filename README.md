@@ -20,6 +20,8 @@
                                (((---'   '---)))
 ```
 
+> Ralph helps you create Bash aliases that can be [**called with `sudo`**](#using-your-new-aliases), have [**parameters**](#design-a-blueprint), and print aesthetically-pleasing error messages. Ralph takes the work out of writing complex Bash aliases and provides parameter **restrictions** and **default** parameter values out-of-the-box.
+
 ### Design a *Blueprint*
 ![blueprint](https://cloud.githubusercontent.com/assets/1139621/7335747/8b64fe6a-eb98-11e4-818a-663748c3efdd.png)
 
