@@ -20,7 +20,7 @@
                                (((---'   '---)))
 ```
 
-### Create a *Blueprint*
+### Design a *Blueprint*
 ![blueprint](https://cloud.githubusercontent.com/assets/1139621/7335747/8b64fe6a-eb98-11e4-818a-663748c3efdd.png)
 
 ### Ask Ralph to Work His *Magic*
