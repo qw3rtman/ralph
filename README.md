@@ -130,3 +130,26 @@ $ mv j /usr/local/bin
 ```
 
 If you don't have `wget` on your system, you can download `ralph` from the [releases page](https://github.com/qw3rtman/ralph/releases) and follow the above steps from the second one onward.
+
+## Limitations
+The major limitation with `ralph` is inherent in optional parameters.
+
+In the above example (`digitalocean`), suppose you want to utilize the default value of `user` (the first paramter) by leaving it blank, `ralph` will just assume the first parameter is what the second parameter was intended to be.
+
+```sh
+$ digitalocean website
+```
+
+Here, I intended for the `user` parameter to default to the `default` value; however, the `user` parameter would be `website` and the `server` parameter would be blank, resulting in it default to the `default` value.
+
+While I intended for the above command to result in:
+
+```sh
+$ ssh root@198.199.97.172
+```
+
+It would actually result in:
+
+```sh
+$ ssh website@198.199.97.172
+```
