@@ -119,6 +119,8 @@ After following the [simple installation instructions](#installation), just run 
 ## Using Your New Aliases
 Just call them! For example, with the above example: `$ digitalocean`.
 
+In addition, you can call them with `sudo`, **unlike classic Bash aliases**: `$ sudo digitalocean`.
+
 ## Installation
 Installation is super-simple: no finicky package managers or dependencies; just pure drag-and-drop.
 
