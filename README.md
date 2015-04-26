@@ -117,7 +117,7 @@ Ensure your blueprint contains valid JSON!
 After following the [simple installation instructions](#installation), just run `ralph` and Ralph will take care of everything else for you.
 
 ## Using Your New Aliases
-Just call them!
+Just call them! For example, with the above example: `$ digitalocean`.
 
 ## Installation
 Installation is super-simple: no finicky package managers or dependencies; just pure drag-and-drop.
