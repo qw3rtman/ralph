@@ -135,6 +135,9 @@ If you don't have `wget` on your system, you can download `ralph` from the [rele
 
 **Now just run `ralph` once and Ralph will take care of setting up your `~/.ralph` directory with all the default settings.**
 
+## Configuration
+All configuration for `ralph` are found in `~/.ralph/config.json`. Here, you can tell Ralph where to search for blueprint JSON files and where to place alias files after they are generated.
+
 ## Limitations
 The major limitation with `ralph` is inherent in optional parameters.
 
