@@ -112,3 +112,9 @@ Similar to the `command`, parameters can be used by enclosing the parameter name
 ```
 
 Ensure your blueprint contains valid JSON!
+
+## Calling Ralph
+After following the [simple installation instructions](#installation), just run `ralph` and Ralph will take care of everything else for you.
+
+## Using Your New Aliases
+Just call them!
