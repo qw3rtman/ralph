@@ -1,0 +1,12 @@
+{
+	"blueprint": "jv {*class}",
+	"command": "javac {class}.java; java {class}",
+
+	"arguments": {
+		"class": {
+			"errors": {
+				"missing": "Show me a Java source file!"
+			}
+		}
+	}
+}
