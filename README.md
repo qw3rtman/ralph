@@ -35,7 +35,7 @@
 
 A blueprint is an outline of the alias being designed. Let's take a look at the blueprint for the `digitalocean` alias shown in the images above.
 
-```
+```javascript
 {
   "blueprint": "digitalocean {*user?} {~server?}",
 ```
@@ -57,7 +57,7 @@ Alias parameters are defined after the first part of the blueprint. In this case
   - the question mark (`?`) → optional value, default will be used if no argument specified
   - the closing brace (`}`) → closes the parameter definition
 
-```
+```javascript
   "command": "ssh {user}@{server}",
 ```
 
@@ -65,7 +65,7 @@ This is where you define what command is executed when you call your alias.
 
 You can use any parameters defined in the `blueprint` above in your command by enclosing the parameter name in braces, as seen in the example above.
 
-```
+```javascript
 
    "arguments": {
      "user": {
@@ -77,7 +77,7 @@ You can use any parameters defined in the `blueprint` above in your command by e
 
 Since `user` is an optional parameter (has a question mark, `?`, in the blueprint declaration), a `default` value is required. In the event that no `user` is specified, the `default` value will be passed in its place.
 
-```
+```javascript
      "server": {
        "values": {
          "default": "198.199.97.172",
@@ -93,7 +93,7 @@ In addition, `server` is a restricted parameter, which only allows certain, expl
 
 `digitalocean website` and `digitalocean git` are acceptable; however, `digitalocean invalid` would print a generic error. This error can also be explcitly defined, as outlined below.
 
-```
+```javascript
        "errors": {
          "invalid": "I've never heard of {server}."
        }
@@ -105,7 +105,7 @@ Define an `missing` error that will be printed if the paramter is **not optional
 
 Similar to the `command`, parameters can be used by enclosing the parameter name in braces, as seen in the example above.
 
-```
+```javascript
     }
   }
 }
