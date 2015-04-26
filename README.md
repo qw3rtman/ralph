@@ -118,3 +118,15 @@ After following the [simple installation instructions](#installation), just run 
 
 ## Using Your New Aliases
 Just call them!
+
+## Installation
+Installation is super-simple: no finicky package managers or dependencies; just pure drag-and-drop.
+
+After downloading `ralph`, simply copy it over to your `$PATH` and you're good to go.
+```sh
+$ wget https://github.com/qw3rtman/ralph/releases/download/v0.1.0/ralph
+$ chmod +x j
+$ mv j /usr/local/bin
+```
+
+If you don't have `wget` on your system, you can download `ralph` from the [releases page](https://github.com/qw3rtman/ralph/releases) and follow the above steps from the second one onward.
