@@ -1,0 +1,12 @@
+{
+	"blueprint": "my {*path?}",
+	"command": "cd ~/Documents/{path}; ls",
+
+	"arguments": {
+		"path": {
+			"values": {
+				"default": ""
+			}
+		}
+	}
+}
