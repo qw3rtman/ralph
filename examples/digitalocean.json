@@ -1,5 +1,5 @@
 {
-	"blueprint": "server {*user?} {~server?}",
+	"blueprint": "digitalocean {*user?} {~server?}",
 	"command": "ssh {user}@{server}",
 
 	"arguments": {
