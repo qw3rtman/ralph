@@ -31,6 +31,8 @@
 
 ## Designing a Blueprint
 
+**Disclaimer: these instructions are a bit confusing, at the moment. It may be easier to take a look at the [example blueprints](https://github.com/qw3rtman/ralph/tree/master/examples).**
+
 A blueprint is an outline of the alias being designed. Let's take a look at the blueprint for the `digitalocean` alias shown in the images above.
 
 ```
