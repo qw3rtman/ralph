@@ -56,3 +56,59 @@ Alias parameters are defined after the first part of the blueprint. In this case
   - the parameter name (`server`) → a parameter named `server`
   - the question mark (`?`) → optional value, default will be used if no argument specified
   - the closing brace (`}`) → closes the parameter definition
+
+```
+  "command": "ssh {user}@{server}",
+```
+
+This is where you define what command is executed when you call your alias.
+
+You can use any parameters defined in the `blueprint` above in your command by enclosing the parameter name in braces, as seen in the example above.
+
+```
+
+   "arguments": {
+     "user": {
+       "values": {
+         "default": "root"
+       }
+     },
+```
+
+Since `user` is an optional parameter (has a question mark, `?`, in the blueprint declaration), a `default` value is required. In the event that no `user` is specified, the `default` value will be passed in its place.
+
+```
+     "server": {
+       "values": {
+         "default": "198.199.97.172",
+         
+         "website": "198.199.97.172",
+         "git": "91.876.54.321"
+       },
+```
+
+Keep in mind that `server`, like `user`, is also an optional paramter, so a `default` value is required.
+
+In addition, `server` is a restricted parameter, which only allows certain, explicitly defined values to be passed. In this case, two values are defined; meaning, only these two values are acceptable parameters.
+
+`digitalocean website` and `digitalocean git` are acceptable; however, `digitalocean invalid` would print a generic error. This error can also be explcitly defined, as outlined below.
+
+```
+       "errors": {
+         "invalid": "I've never heard of {server}."
+       }
+```
+
+Define an `invalid` error that will be printed if the parameter is restricted and the value provided is not acceptable.
+
+Define an `missing` error that will be printed if the paramter is **not optional** and a value is not provided.
+
+Similar to the `command`, parameters can be used by enclosing the parameter name in braces, as seen in the example above.
+
+```
+    }
+  }
+}
+```
+
+Ensure your blueprint contains valid JSON!
