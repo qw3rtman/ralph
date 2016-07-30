@@ -54,7 +54,7 @@ Alias parameters are defined after the first part of the blueprint. In this case
   - the closing brace (`}`) → closes the parameter definition
 - `{~server?}`
   - the opening brace (`{`) → defines a parameter
-  - the asterisk (`~`) → certain values are acceptable (restricted)
+  - the tilde (`~`) → certain values are acceptable (restricted)
   - the parameter name (`server`) → a parameter named `server`
   - the question mark (`?`) → optional value, default will be used if no argument specified
   - the closing brace (`}`) → closes the parameter definition
