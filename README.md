@@ -28,7 +28,7 @@
 ### Ask Ralph to Work His *Magic*
 ![magic](https://cloud.githubusercontent.com/assets/1139621/7335748/8b71f5fc-eb98-11e4-97ca-34dbab476b68.png)
 
-### Feel *Groovy* Using Your New Alias!
+### Use Your New Alias!
 ![alias](https://cloud.githubusercontent.com/assets/1139621/7335749/8b7329b8-eb98-11e4-8858-5d4ed0ab4fff.png)
 
 ## Designing a Blueprint
